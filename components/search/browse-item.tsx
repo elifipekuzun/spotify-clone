@@ -1,21 +1,26 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  Text,
+} from 'react-native';
+import {Category} from '../../state';
 
-interface Category {
-  id: string;
-  title: string;
-  bgImage: string;
-}
-
-export const BrowseItem: React.FC<{item: Category}> = ({item}) => {
+export const BrowseItem: React.FC<{item: Category; onPress?: () => void}> = ({
+  item,
+  onPress,
+}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Image
+        <ImageBackground
           resizeMode="cover"
-          source={{uri: item.bgImage}}
-          style={styles.image}
-        />
+          source={{uri: item.icons[0].url}}
+          style={styles.image}>
+          <Text style={styles.title}>{item.name}</Text>
+        </ImageBackground>
       </View>
     </TouchableOpacity>
   );
@@ -35,8 +40,11 @@ const styles = StyleSheet.create({
     padding: '10%',
   },
   title: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     color: 'white',
+    position: 'absolute',
+    bottom: '2%',
+    left: '5%',
   },
 });

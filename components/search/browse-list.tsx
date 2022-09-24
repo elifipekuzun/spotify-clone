@@ -1,25 +1,39 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {BrowseItem} from './browse-item';
+import {useActions} from '../../state/hooks/use-actions';
+import {useTypedSelector} from '../../state/hooks/use-typed-selector';
+import {useNavigation} from '@react-navigation/native';
+import {ScreenNavigationProps} from '../../App';
 
-interface Category {
-  id: string;
-  title: string;
-  bgImage: string;
-}
+export const BrowseList: React.FC = () => {
+  const {fetchBrowseCategories, fetchCategoryList} = useActions();
+  const {spotify} = useTypedSelector(state => state);
+  const navigation = useNavigation<ScreenNavigationProps>();
 
-export const BrowseList: React.FC<{categories: Category[]}> = ({
-  categories,
-}) => {
+  const categoryPlaylistHandler = (categoryId: string) => {
+    fetchCategoryList(categoryId);
+    navigation.navigate('CategoryPlaylists');
+  };
+
+  useEffect(() => {
+    fetchBrowseCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <View>
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.contentContainer}
         keyExtractor={item => item.id}
-        data={categories}
+        data={spotify.categories}
         renderItem={({item}) => {
-          return <BrowseItem item={item} />;
+          return (
+            <BrowseItem
+              item={item}
+              onPress={() => categoryPlaylistHandler(item.id)}
+            />
+          );
         }}
       />
     </View>
