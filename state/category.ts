@@ -11,11 +11,18 @@ export interface Category {
   name: string;
 }
 
-export interface CategoryPlaylist {
-  collaborative: boolean;
+export interface Track {}
+
+export interface CategoryPlaylistItem {
   description: string;
   href: string;
   id: string;
-  images: string[];
+  images: [
+    {
+      height: number;
+      url: string;
+      width: number;
+    },
+  ];
   name: string;
 }

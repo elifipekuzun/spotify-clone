@@ -4,16 +4,16 @@ import {BrowseItem} from './browse-item';
 import {useActions} from '../../state/hooks/use-actions';
 import {useTypedSelector} from '../../state/hooks/use-typed-selector';
 import {useNavigation} from '@react-navigation/native';
-import {ScreenNavigationProps} from '../../App';
+import {ScreenNavigationProps} from '../../navigation';
 
 export const BrowseList: React.FC = () => {
-  const {fetchBrowseCategories, fetchCategoryList} = useActions();
+  const {fetchBrowseCategories, fetchCategoryPlaylist} = useActions();
   const {spotify} = useTypedSelector(state => state);
   const navigation = useNavigation<ScreenNavigationProps>();
 
-  const categoryPlaylistHandler = (categoryId: string) => {
-    fetchCategoryList(categoryId);
-    navigation.navigate('CategoryPlaylists');
+  const categoryPlaylistHandler = (categoryId: string, title: string) => {
+    fetchCategoryPlaylist(categoryId);
+    navigation.navigate('CategoryPlaylists', {screenTitle: title});
   };
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const BrowseList: React.FC = () => {
           return (
             <BrowseItem
               item={item}
-              onPress={() => categoryPlaylistHandler(item.id)}
+              onPress={() => categoryPlaylistHandler(item.id, item.name)}
             />
           );
         }}
@@ -43,5 +43,6 @@ export const BrowseList: React.FC = () => {
 const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
+    marginBottom: 200,
   },
 });

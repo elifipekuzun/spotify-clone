@@ -1,10 +1,10 @@
 import {Actions} from '../actions';
 import {ActionTypes} from '../action-types';
-import {Category, CategoryPlaylist} from '../category';
+import {Category, CategoryPlaylistItem} from '../category';
 
 interface SpotifyReducerState {
   categories: Category[];
-  categoryPlaylist: CategoryPlaylist[];
+  categoryPlaylist: CategoryPlaylistItem[];
 }
 
 const initialState: SpotifyReducerState = {

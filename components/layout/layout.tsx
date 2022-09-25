@@ -16,7 +16,9 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   screen: {
+    flex: 1,
     backgroundColor: 'black',
     paddingHorizontal: '5%',
+    marginBottom: '15%',
   },
 });

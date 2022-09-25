@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQCxp3p-UjdFVpjMfkjYjtAODm7mz4hwZZomMspxVMymOwUXrc3YHE7BZy8To2-VUhlDVBdqJlc1WT5hR6JaNIklm94rxliJomUUQcyCbDDrjPJsqbFgMES0Br02KgvGModZ2By_ONOv_BXhlb7saL8a4jMzr4J-4ZgPgbP84MJAOQU5AfM',
+    'Bearer BQCO6_G4751lNyA77oDxauNF6BSLFTu1fXqiOdy70_Rp85jlFeH-s4bjaShkmZhUO4XKjiFkdzqMbt3WS_58sP11-oAW4MSlgkCElgbgd4JW38MNAXtLhhrQgMAniqETPYI5EEe7oO_CP1kvFo9fNt_BirSkblys0o30S5o0BM0_JqudAjo',
 };
 
 const fetchBrowseCategories = () => {
@@ -33,7 +33,7 @@ const fetchBrowseCategories = () => {
   };
 };
 
-const fetchCategoryList = (categoryId: string) => {
+export const fetchCategoryPlaylist = (categoryId: string) => {
   return async (dispatch: Dispatch<Actions>) => {
     try {
       const {data} = await axios.get(
@@ -42,12 +42,10 @@ const fetchCategoryList = (categoryId: string) => {
           headers,
         },
       );
-
-      const playlists = data.playlists.items;
-      console.log(playlists);
+      const items = data.playlists.items;
       dispatch({
         type: ActionTypes.GET_CATEGORY_LIST,
-        payload: {categoryPlaylist: playlists},
+        payload: {categoryPlaylist: items},
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -59,5 +57,5 @@ const fetchCategoryList = (categoryId: string) => {
 
 export const actionCreators = {
   fetchBrowseCategories,
-  fetchCategoryList,
+  fetchCategoryPlaylist,
 };

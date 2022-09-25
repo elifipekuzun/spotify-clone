@@ -1,5 +1,5 @@
 import {ActionTypes} from '../action-types';
-import {Category, CategoryPlaylist} from '../category';
+import {Category, CategoryPlaylistItem} from '../category';
 
 export interface GetBrowseCategoriesAction {
   type: ActionTypes.GET_BROWSE_CATEGORIES;
@@ -8,11 +8,11 @@ export interface GetBrowseCategoriesAction {
   };
 }
 
-export interface GetCategoryListAction {
+export interface GetCategoryPlaylist {
   type: ActionTypes.GET_CATEGORY_LIST;
   payload: {
-    categoryPlaylist: CategoryPlaylist[];
+    categoryPlaylist: CategoryPlaylistItem[];
   };
 }
 
-export type Actions = GetBrowseCategoriesAction | GetCategoryListAction;
+export type Actions = GetBrowseCategoriesAction | GetCategoryPlaylist;
