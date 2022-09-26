@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQCO6_G4751lNyA77oDxauNF6BSLFTu1fXqiOdy70_Rp85jlFeH-s4bjaShkmZhUO4XKjiFkdzqMbt3WS_58sP11-oAW4MSlgkCElgbgd4JW38MNAXtLhhrQgMAniqETPYI5EEe7oO_CP1kvFo9fNt_BirSkblys0o30S5o0BM0_JqudAjo',
+    'Bearer BQDF8L-0zuWL6Bf4z5X-u6llw8lTrdnHqghKPKH5tAOSSMA-gVW8gUbhzDtbrTL3AKNsFqvj1vPSi3TSlHGjRY3jlTNZnCX4kFWCskGvKXEKataexUn5VjH41_cUg1JJEl1j8ERBxpuERYx99_3_-PJ7MlIG1q2Vt73OdLoa8wqIhNQkTSo',
 };
 
 const fetchBrowseCategories = () => {
@@ -55,7 +55,57 @@ export const fetchCategoryPlaylist = (categoryId: string) => {
   };
 };
 
+export const fetchPlaylists = (playlistName: string) => {
+  return async (dispatch: Dispatch<Actions>) => {
+    try {
+      const {data} = await axios.get(
+        `https://api.spotify.com/v1/browse/${playlistName}`,
+        {
+          headers,
+        },
+      );
+      const playlists =
+        playlistName === 'featured-playlists'
+          ? data.playlists.items
+          : data.albums.items;
+      dispatch({
+        type: ActionTypes.GET_PLAYLISTS,
+        payload: {
+          playlistName,
+          data: playlists,
+        },
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+};
+export const fetchUsersPlaylists = () => {
+  return async (dispatch: Dispatch<Actions>) => {
+    try {
+      const {data} = await axios.get(
+        'https://api.spotify.com/v1/me/playlists',
+        {
+          headers,
+        },
+      );
+      dispatch({
+        type: ActionTypes.GET_USERS_PLAYLISTS,
+        payload: {userPlaylists: data.items},
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+};
+
 export const actionCreators = {
   fetchBrowseCategories,
   fetchCategoryPlaylist,
+  fetchPlaylists,
+  fetchUsersPlaylists,
 };

@@ -1,11 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {Layout} from '../components/layout/layout';
+import {LibraryHeaderFix} from '../components/library/library-header-fix';
+import {UserPlaylists} from '../components/library/user-playlists';
 
 export const LibraryScreen: React.FC = () => {
   return (
     <Layout>
-      <Text>Library Screen</Text>
+      <LibraryHeaderFix />
+      <UserPlaylists />
     </Layout>
   );
 };

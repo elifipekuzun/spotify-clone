@@ -26,3 +26,26 @@ export interface CategoryPlaylistItem {
   ];
   name: string;
 }
+
+export interface UserPlaylist {
+  id: string;
+  images: [
+    {
+      height: number;
+      url: string;
+      width: number;
+    },
+  ];
+  name: string;
+  type: string;
+  owner: {
+    display_name: string;
+    id: string;
+    href: string;
+    uri: string;
+  };
+  tracks: {
+    href: string;
+    total: number;
+  };
+}
