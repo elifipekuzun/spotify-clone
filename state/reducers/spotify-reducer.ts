@@ -1,6 +1,12 @@
 import {Actions} from '../actions';
 import {ActionTypes} from '../action-types';
-import {Category, CategoryPlaylistItem, UserPlaylist} from '../category';
+import {
+  Category,
+  CategoryPlaylistItem,
+  UserPlaylist,
+  Track,
+  ImageParams,
+} from '../category';
 
 interface SpotifyReducerState {
   categories: Category[];
@@ -9,6 +15,8 @@ interface SpotifyReducerState {
     [key: string]: CategoryPlaylistItem[];
   };
   userPlaylists: UserPlaylist[];
+  tracks: Track[];
+  coverImage: ImageParams[];
 }
 
 const initialState: SpotifyReducerState = {
@@ -16,6 +24,8 @@ const initialState: SpotifyReducerState = {
   categoryPlaylist: [],
   playlists: {},
   userPlaylists: [],
+  tracks: [],
+  coverImage: [],
 };
 
 export const spotifyReducer = (
@@ -44,6 +54,12 @@ export const spotifyReducer = (
       return {
         ...state,
         userPlaylists: action.payload.userPlaylists,
+      };
+    case ActionTypes.GET_PLAYLIST_TRACKS:
+      return {
+        ...state,
+        tracks: action.payload.tracks,
+        coverImage: action.payload.coverImage,
       };
     default:
       return state;

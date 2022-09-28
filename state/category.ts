@@ -1,41 +1,41 @@
+export interface ImageParams {
+  width: number;
+  height: number;
+  url: string;
+}
+
 export interface Category {
   href: string;
-  icons: [
-    {
-      height: number;
-      width: number;
-      url: string;
-    },
-  ];
+  icons: ImageParams[];
   id: string;
   name: string;
 }
 
-export interface Track {}
+export interface Track {
+  id: string;
+  name: string;
+  images: ImageParams[];
+  href: string;
+  popularity: number;
+  duration_ms: number;
+  artists: [
+    {
+      name: string;
+    },
+  ];
+}
 
 export interface CategoryPlaylistItem {
   description: string;
   href: string;
   id: string;
-  images: [
-    {
-      height: number;
-      url: string;
-      width: number;
-    },
-  ];
+  images: ImageParams[];
   name: string;
 }
 
 export interface UserPlaylist {
   id: string;
-  images: [
-    {
-      height: number;
-      url: string;
-      width: number;
-    },
-  ];
+  images: ImageParams[];
   name: string;
   type: string;
   owner: {

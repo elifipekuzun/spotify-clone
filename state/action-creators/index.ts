@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQDF8L-0zuWL6Bf4z5X-u6llw8lTrdnHqghKPKH5tAOSSMA-gVW8gUbhzDtbrTL3AKNsFqvj1vPSi3TSlHGjRY3jlTNZnCX4kFWCskGvKXEKataexUn5VjH41_cUg1JJEl1j8ERBxpuERYx99_3_-PJ7MlIG1q2Vt73OdLoa8wqIhNQkTSo',
+    'Bearer BQCju-QNVfpszheOWOBZAEOWmRxoJLzt3tiVDPqir4c__4oQyHDmrWaHZ_JO0WPHlVzFhCDuThIt2ZXfchSK2uT8iEuzpV22VWOeagqzkV1TAq0rTmuPjK-Ev6CmPEopL-pTjwHSXnPWG5EFu4SISlwU3GPRZ2fCoj4ZGnpXkSy5Q5aenEc',
 };
 
 const fetchBrowseCategories = () => {
@@ -103,9 +103,40 @@ export const fetchUsersPlaylists = () => {
   };
 };
 
+export const fetchPlaylistTracks = (playlistId: string) => {
+  return async (dispatch: Dispatch<Actions>) => {
+    try {
+      const {data} = await axios.get(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          headers,
+        },
+      );
+      const tracks = data.items.map((item: any) => item.track.album);
+
+      const images = await axios.get(
+        `https://api.spotify.com/v1/playlists/${playlistId}/images`,
+        {
+          headers,
+        },
+      );
+
+      dispatch({
+        type: ActionTypes.GET_PLAYLIST_TRACKS,
+        payload: {tracks, coverImage: images.data},
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+};
+
 export const actionCreators = {
   fetchBrowseCategories,
   fetchCategoryPlaylist,
   fetchPlaylists,
   fetchUsersPlaylists,
+  fetchPlaylistTracks,
 };

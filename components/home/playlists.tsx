@@ -3,10 +3,14 @@ import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {PlaylistItem} from './playlist-item';
 import {useActions} from '../../state/hooks/use-actions';
 import {useTypedSelector} from '../../state/hooks/use-typed-selector';
+import {useNavigation} from '@react-navigation/native';
+import {HomeStackNavigationProps} from '../../navigation';
 
 export const Playlists: React.FC<{playlistName: string}> = ({playlistName}) => {
   const {playlists} = useTypedSelector(state => state.spotify);
   const {fetchPlaylists} = useActions();
+
+  const navigation = useNavigation<HomeStackNavigationProps>();
 
   useEffect(() => {
     fetchPlaylists(playlistName);
@@ -22,7 +26,15 @@ export const Playlists: React.FC<{playlistName: string}> = ({playlistName}) => {
       <ScrollView horizontal>
         {playlists[playlistName] &&
           playlists[playlistName].map(item => {
-            return <PlaylistItem item={item} key={item.id} />;
+            return (
+              <PlaylistItem
+                item={item}
+                key={item.id}
+                onPress={() => {
+                  navigation.navigate('Tracks', {playlistId: item.id});
+                }}
+              />
+            );
           })}
       </ScrollView>
     </View>

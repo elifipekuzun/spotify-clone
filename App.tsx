@@ -10,11 +10,45 @@ import {HomeScreen} from './screens/home-screen';
 import {SearchScreen} from './screens/search-screen';
 import {LibraryScreen} from './screens/library-screen';
 import {CategoryPlaylistsScreen} from './screens/category-playlists-screen';
+import {TracksScreen} from './screens/tracks-screen';
 import {store} from './state/store';
-import {SearchStackParamList, TabParamList} from './navigation';
+import {
+  SearchStackParamList,
+  TabParamList,
+  HomeStackParamList,
+} from './navigation';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createStackNavigator<SearchStackParamList>();
+const HomeStack = createStackNavigator<HomeStackParamList>();
+
+const HomeStackNavigator = () => {
+  return (
+    <HomeStack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="Tracks"
+        component={TracksScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            opacity: 0.9,
+          },
+          headerTintColor: 'white',
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
 const CategoryStackNavigator = () => {
   return (
@@ -37,6 +71,7 @@ const CategoryStackNavigator = () => {
         name="CategoryPlaylists"
         component={CategoryPlaylistsScreen}
       />
+      <Stack.Screen name="Tracks" component={TracksScreen} />
     </Stack.Navigator>
   );
 };
@@ -61,7 +96,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: ({size, focused}) => (
             <Icon

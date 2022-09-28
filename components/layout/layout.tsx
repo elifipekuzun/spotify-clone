@@ -1,10 +1,18 @@
 import React, {PropsWithChildren} from 'react';
-import {SafeAreaView, View, StyleSheet} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
-export const Layout: React.FC<PropsWithChildren> = ({children}) => {
+export const Layout: React.FC<
+  PropsWithChildren<{style?: StyleProp<ViewStyle>}>
+> = ({children, style}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.screen}>{children}</View>
+      <View style={[styles.screen, style]}>{children}</View>
     </SafeAreaView>
   );
 };

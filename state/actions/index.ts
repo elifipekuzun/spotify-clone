@@ -1,5 +1,11 @@
 import {ActionTypes} from '../action-types';
-import {Category, CategoryPlaylistItem, UserPlaylist} from '../category';
+import {
+  Category,
+  CategoryPlaylistItem,
+  UserPlaylist,
+  Track,
+  ImageParams,
+} from '../category';
 
 export interface GetBrowseCategoriesAction {
   type: ActionTypes.GET_BROWSE_CATEGORIES;
@@ -30,8 +36,17 @@ export interface GetUsersPlaylistsAction {
   };
 }
 
+export interface GetPlaylistTracksAction {
+  type: ActionTypes.GET_PLAYLIST_TRACKS;
+  payload: {
+    tracks: Track[];
+    coverImage: ImageParams[];
+  };
+}
+
 export type Actions =
   | GetBrowseCategoriesAction
   | GetCategoryPlaylist
   | GetPlaylists
-  | GetUsersPlaylistsAction;
+  | GetUsersPlaylistsAction
+  | GetPlaylistTracksAction;
