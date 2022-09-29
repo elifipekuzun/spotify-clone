@@ -11,11 +11,12 @@ import {CategoryPlaylistItem} from '../../state';
 
 const {width} = Dimensions.get('screen');
 
-export const CategoryPlaylistItems: React.FC<{item: CategoryPlaylistItem}> = ({
-  item,
-}) => {
+export const CategoryPlaylistItems: React.FC<{
+  item: CategoryPlaylistItem;
+  onPress: () => void;
+}> = ({item, onPress}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Image
           resizeMode="contain"

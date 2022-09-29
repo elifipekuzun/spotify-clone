@@ -6,7 +6,11 @@ import {BrowseList} from '../components/search/browse-list';
 export const SearchScreen: React.FC = () => {
   return (
     <Layout>
-      <Searchbar />
+      <Searchbar
+        placeholder="What do you want to listen to?"
+        placeholderTextColor="black"
+        iconColor="black"
+      />
       <BrowseList />
     </Layout>
   );

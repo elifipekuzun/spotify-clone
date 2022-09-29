@@ -71,7 +71,18 @@ const CategoryStackNavigator = () => {
         name="CategoryPlaylists"
         component={CategoryPlaylistsScreen}
       />
-      <Stack.Screen name="Tracks" component={TracksScreen} />
+      <Stack.Screen
+        name="Tracks"
+        component={TracksScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            opacity: 0.9,
+          },
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

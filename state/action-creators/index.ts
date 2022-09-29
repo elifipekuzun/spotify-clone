@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQCju-QNVfpszheOWOBZAEOWmRxoJLzt3tiVDPqir4c__4oQyHDmrWaHZ_JO0WPHlVzFhCDuThIt2ZXfchSK2uT8iEuzpV22VWOeagqzkV1TAq0rTmuPjK-Ev6CmPEopL-pTjwHSXnPWG5EFu4SISlwU3GPRZ2fCoj4ZGnpXkSy5Q5aenEc',
+    'Bearer BQCtVL9RrhN_kH3fECRDdZ24qUR7JaQ8XGjq0Mxh_D6vVcJGxdEG8LEMkWIBR2F_CzpC3t8MYsMuXpQL9QTJ8XEzUKZDzv-zMeO3eL4-AYRDn_uS0dzqdaWuOyoWQ05bq5F0u50X6yparsL_nDeiQ7Ta5rmcjf5OjfTYKLVWs5h0svTrKe0',
 };
 
 const fetchBrowseCategories = () => {

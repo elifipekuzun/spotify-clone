@@ -1,17 +1,31 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Animated, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import {TrackItem} from './track';
 import {useTypedSelector} from '../../state/hooks/use-typed-selector';
 import {useActions} from '../../state/hooks/use-actions';
 import {Searchbar} from '../searchbar';
+import {SortTracks} from './sort-tracks';
+import {SortModalView} from './sort-modal-view';
+import {TracksActionBar} from './tracks-action-bar';
 
 export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
   const {tracks, coverImage} = useTypedSelector(state => state.spotify);
   const {fetchPlaylistTracks} = useActions();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const yOffset = new Animated.Value(0);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
     fetchPlaylistTracks(playlistId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlistId]);
@@ -26,7 +40,6 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
         ],
         outputRange: [0, 1, 0],
       }),
-
       transform: [
         {
           scale: yOffset.interpolate({
@@ -42,9 +55,16 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
     };
   };
 
+  if (isLoading) {
+    return (
+      <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
+  }
+
   return (
     <>
-      <Searchbar />
       <Animated.ScrollView
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: yOffset}}}],
@@ -52,6 +72,15 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
             useNativeDriver: false,
           },
         )}>
+        <View style={styles.searchContainer}>
+          <Searchbar
+            placeholder="Find in playlist"
+            style={styles.search}
+            placeholderTextColor="white"
+            iconColor="white"
+          />
+          <SortTracks onPress={() => setIsModalVisible(!isModalVisible)} />
+        </View>
         <Animated.View
           style={[styles.imageContainer, transitionAnimation(0, 250)]}>
           {coverImage.length > 0 && (
@@ -62,6 +91,7 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
             />
           )}
         </Animated.View>
+        <TracksActionBar />
         <View style={styles.tracksContainer}>
           {tracks &&
             tracks.map((track, i) => {
@@ -69,6 +99,12 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
             })}
         </View>
       </Animated.ScrollView>
+      {isModalVisible && (
+        <SortModalView
+          isSortModalVisible={isModalVisible}
+          onSortModalClose={() => setIsModalVisible(!isModalVisible)}
+        />
+      )}
     </>
   );
 };
@@ -86,5 +122,16 @@ const styles = StyleSheet.create({
   },
   tracksContainer: {
     zIndex: 10,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  search: {
+    backgroundColor: 'gray',
+    opacity: 0.4,
+    width: '80%',
+    paddingVertical: '1.5%',
   },
 });

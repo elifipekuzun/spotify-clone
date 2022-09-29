@@ -1,16 +1,22 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const Searchbar: React.FC = () => {
+export const Searchbar: React.FC<{
+  placeholder: string;
+  style?: StyleProp<ViewStyle>;
+  placeholderTextColor: string;
+  iconColor: string;
+}> = ({placeholder, style, placeholderTextColor, iconColor}) => {
   return (
-    <View style={styles.search}>
-      <Icon name="search-outline" size={24} />
+    <View style={[styles.search, style]}>
+      <Icon name="search-outline" size={24} color={iconColor} />
       <TextInput
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"
-        placeholder="What do you want to listen to?"
+        placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
       />
     </View>
   );
@@ -33,5 +39,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: '2%',
+    width: '100%',
   },
 });
