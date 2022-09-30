@@ -7,6 +7,11 @@ export type HomeStackParamList = {
   Tracks: {playlistId: string};
 };
 
+export type LibraryStackParamList = {
+  Library: undefined;
+  AddSongToList: {playlistId: string};
+};
+
 export type SearchStackParamList = {
   Search: undefined;
   CategoryPlaylists: {screenTitle: string};
@@ -16,7 +21,7 @@ export type SearchStackParamList = {
 export type TabParamList = {
   Home: undefined;
   search: NavigatorScreenParams<SearchStackParamList>;
-  Library: undefined;
+  library: undefined;
 };
 
 export type ScreenNavigationProps = StackNavigationProp<
@@ -32,6 +37,15 @@ export type PlaylistScreenProps = StackScreenProps<
 export type HomeStackNavigationProps = StackNavigationProp<
   HomeStackParamList,
   'Tracks'
+>;
+export type LibraryStackNavigationProps = StackNavigationProp<
+  LibraryStackParamList,
+  'AddSongToList'
+>;
+
+export type LibraryStackScreenProps = StackScreenProps<
+  LibraryStackParamList,
+  'AddSongToList'
 >;
 
 export type HomeStackScreenProps = StackScreenProps<

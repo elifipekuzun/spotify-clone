@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQCtVL9RrhN_kH3fECRDdZ24qUR7JaQ8XGjq0Mxh_D6vVcJGxdEG8LEMkWIBR2F_CzpC3t8MYsMuXpQL9QTJ8XEzUKZDzv-zMeO3eL4-AYRDn_uS0dzqdaWuOyoWQ05bq5F0u50X6yparsL_nDeiQ7Ta5rmcjf5OjfTYKLVWs5h0svTrKe0',
+    'Bearer BQC3MaSxVlJcyJmAl4Q8ciGkj0xonp3EL8XKd0USZXjurpYNvBXdwjStx9Jw0sPSZto_kmZK7dTUe4vkbwkS3oPLuo2wRwNQp3G7EuND81kbN-_to_XvmkPmIU3WsNtgB8EOCIoi56bPZJLAk-RmKxgWrPvTnriAhRNEtBANeEvAVK5-Q20',
 };
 
 const fetchBrowseCategories = () => {
@@ -133,10 +133,32 @@ export const fetchPlaylistTracks = (playlistId: string) => {
   };
 };
 
+export const createPlaylist = (
+  userId: string,
+  name: string,
+  description: string,
+) => {
+  return async (dispatch: Dispatch<Actions>) => {
+    try {
+      await axios.post(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {name, description},
+        {headers},
+      );
+      dispatch({type: ActionTypes.CREATE_PLAYLIST});
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+};
+
 export const actionCreators = {
   fetchBrowseCategories,
   fetchCategoryPlaylist,
   fetchPlaylists,
   fetchUsersPlaylists,
   fetchPlaylistTracks,
+  createPlaylist,
 };

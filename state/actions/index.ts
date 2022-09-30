@@ -44,9 +44,14 @@ export interface GetPlaylistTracksAction {
   };
 }
 
+export interface CreatePlaylistAction {
+  type: ActionTypes.CREATE_PLAYLIST;
+}
+
 export type Actions =
   | GetBrowseCategoriesAction
   | GetCategoryPlaylist
   | GetPlaylists
   | GetUsersPlaylistsAction
-  | GetPlaylistTracksAction;
+  | GetPlaylistTracksAction
+  | CreatePlaylistAction;

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {CreatePlaylistModal} from './create-playlist-modal';
 
 export const LibraryHeaderFix: React.FC = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <View style={styles.mainContainer}>
       <View style={styles.leftContainer}>
@@ -15,10 +17,16 @@ export const LibraryHeaderFix: React.FC = () => {
         <TouchableOpacity>
           <Icon name="search" size={28} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsModalVisible(!isModalVisible)}>
           <Icon name="add" size={34} color="white" />
         </TouchableOpacity>
       </View>
+      {isModalVisible && (
+        <CreatePlaylistModal
+          isVisible={isModalVisible}
+          onRequestClose={() => setIsModalVisible(!isModalVisible)}
+        />
+      )}
     </View>
   );
 };

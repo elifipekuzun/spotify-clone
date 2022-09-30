@@ -3,9 +3,12 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import {UserPlaylist} from '../../state';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const UserPlaylistItem: React.FC<{item: UserPlaylist}> = ({item}) => {
+export const UserPlaylistItem: React.FC<{
+  item: UserPlaylist;
+  onPress: () => void;
+}> = ({item, onPress}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         {item.images.length ? (
           <Image

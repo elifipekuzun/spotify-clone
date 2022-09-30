@@ -11,16 +11,19 @@ import {SearchScreen} from './screens/search-screen';
 import {LibraryScreen} from './screens/library-screen';
 import {CategoryPlaylistsScreen} from './screens/category-playlists-screen';
 import {TracksScreen} from './screens/tracks-screen';
+import {AddSongToListScreen} from './screens/add-songs-to-list-screen';
 import {store} from './state/store';
 import {
   SearchStackParamList,
   TabParamList,
   HomeStackParamList,
+  LibraryStackParamList,
 } from './navigation';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createStackNavigator<SearchStackParamList>();
 const HomeStack = createStackNavigator<HomeStackParamList>();
+const LibraryStack = createStackNavigator<LibraryStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
@@ -52,7 +55,10 @@ const HomeStackNavigator = () => {
 
 const CategoryStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}>
       <Stack.Screen
         name="Search"
         component={SearchScreen}
@@ -84,6 +90,33 @@ const CategoryStackNavigator = () => {
         }}
       />
     </Stack.Navigator>
+  );
+};
+
+const LibraryStackNavigator = () => {
+  return (
+    <LibraryStack.Navigator>
+      <LibraryStack.Screen
+        name="Library"
+        component={LibraryScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <LibraryStack.Screen
+        name="AddSongToList"
+        component={AddSongToListScreen}
+        options={{
+          headerTitle: '',
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: 'black',
+            opacity: 0.9,
+          },
+        }}
+      />
+    </LibraryStack.Navigator>
   );
 };
 
@@ -132,8 +165,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Library"
-        component={LibraryScreen}
+        name="library"
+        component={LibraryStackNavigator}
         options={{
           tabBarIcon: ({size, focused}) => (
             <Icon

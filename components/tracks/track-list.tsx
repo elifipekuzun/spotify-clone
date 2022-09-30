@@ -14,7 +14,10 @@ import {SortTracks} from './sort-tracks';
 import {SortModalView} from './sort-modal-view';
 import {TracksActionBar} from './tracks-action-bar';
 
-export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
+export const TrackList: React.FC<{playlistId: string; screenName?: string}> = ({
+  playlistId,
+  screenName,
+}) => {
   const {tracks, coverImage} = useTypedSelector(state => state.spotify);
   const {fetchPlaylistTracks} = useActions();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -72,22 +75,29 @@ export const TrackList: React.FC<{playlistId: string}> = ({playlistId}) => {
             useNativeDriver: false,
           },
         )}>
-        <View style={styles.searchContainer}>
-          <Searchbar
-            placeholder="Find in playlist"
-            style={styles.search}
-            placeholderTextColor="white"
-            iconColor="white"
-          />
-          <SortTracks onPress={() => setIsModalVisible(!isModalVisible)} />
-        </View>
+        {screenName !== 'Library' && (
+          <View style={styles.searchContainer}>
+            <Searchbar
+              placeholder="Find in playlist"
+              style={styles.search}
+              placeholderTextColor="white"
+              iconColor="white"
+            />
+            <SortTracks onPress={() => setIsModalVisible(!isModalVisible)} />
+          </View>
+        )}
         <Animated.View
           style={[styles.imageContainer, transitionAnimation(0, 250)]}>
           {coverImage.length > 0 && (
             <Image
               resizeMode="contain"
               style={[styles.image]}
-              source={{uri: coverImage[0].url}}
+              source={{
+                uri:
+                  tracks.length === 0
+                    ? 'https://i.pinimg.com/https://play-lh.googleusercontent.com/j-MLXrudwclqIlOZxRe90kOGS744GY0spVZF2OsEnJeMMxqa6Qxu1SwLiCmjQp8gIA/28/69/13/2869138747ae54788cfd81f116a2e3f0.jpg'
+                    : coverImage[0].url,
+              }}
             />
           )}
         </Animated.View>
