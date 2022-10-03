@@ -35,6 +35,7 @@ export const TrackItem: React.FC<{item: Track}> = ({item}) => {
         </View>
       </View>
       <TrackModal
+        userTrackModal={false}
         item={item}
         visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}

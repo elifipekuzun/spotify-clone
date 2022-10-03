@@ -2,12 +2,13 @@ import React from 'react';
 import {TouchableOpacity, View, StyleSheet, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const ModalActionItem: React.FC<{title: string; iconName: string}> = ({
-  title,
-  iconName,
-}) => {
+export const ModalActionItem: React.FC<{
+  title: string;
+  iconName: string;
+  onPress?: () => void;
+}> = ({title, iconName, onPress}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.modalContentItem}>
         <Icon style={styles.icon} name={iconName} size={26} color={'white'} />
         <Text style={styles.text}>{title}</Text>

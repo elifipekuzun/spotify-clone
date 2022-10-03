@@ -4,10 +4,10 @@ import {TrackList} from '../components/tracks/track-list';
 import {HomeStackScreenProps} from '../navigation';
 
 export const TracksScreen: React.FC<HomeStackScreenProps> = ({route}) => {
-  const id = route.params.playlistId;
+  const {playlistId} = route.params;
   return (
     <Layout>
-      <TrackList playlistId={id} />
+      <TrackList playlistId={playlistId} />
     </Layout>
   );
 };

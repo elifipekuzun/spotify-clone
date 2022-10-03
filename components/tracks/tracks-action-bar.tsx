@@ -3,7 +3,9 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export const TracksActionBar: React.FC = () => {
+export const TracksActionBar: React.FC<{onPressMore: () => void}> = ({
+  onPressMore,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -13,7 +15,7 @@ export const TracksActionBar: React.FC = () => {
         <TouchableOpacity>
           <Icon name="download-circle-outline" size={30} color="darkgrey" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressMore}>
           <Icon name="dots-horizontal" size={30} color="darkgrey" />
         </TouchableOpacity>
       </View>

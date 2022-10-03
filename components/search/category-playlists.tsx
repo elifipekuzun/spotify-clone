@@ -18,7 +18,11 @@ export const CategoryPlaylists: React.FC = () => {
         return (
           <CategoryPlaylistItems
             item={item}
-            onPress={() => navigation.navigate('Tracks', {playlistId: item.id})}
+            onPress={() =>
+              navigation.navigate('Tracks', {
+                playlistId: item.id,
+              })
+            }
           />
         );
       }}

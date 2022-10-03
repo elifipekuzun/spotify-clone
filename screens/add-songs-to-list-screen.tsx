@@ -7,9 +7,10 @@ export const AddSongToListScreen: React.FC<LibraryStackScreenProps> = ({
   route,
 }) => {
   const id = route.params.playlistId;
+
   return (
     <Layout>
-      <TrackList playlistId={id} screenName="Library" />
+      <TrackList playlistId={id} userPlaylist={true} />
     </Layout>
   );
 };

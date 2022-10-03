@@ -2,12 +2,13 @@ import axios from 'axios';
 import {Dispatch} from 'redux';
 import {ActionTypes} from '../action-types';
 import {Actions} from '../actions';
+import {UserPlaylist} from '../category';
 
 const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
   Authorization:
-    'Bearer BQC3MaSxVlJcyJmAl4Q8ciGkj0xonp3EL8XKd0USZXjurpYNvBXdwjStx9Jw0sPSZto_kmZK7dTUe4vkbwkS3oPLuo2wRwNQp3G7EuND81kbN-_to_XvmkPmIU3WsNtgB8EOCIoi56bPZJLAk-RmKxgWrPvTnriAhRNEtBANeEvAVK5-Q20',
+    'Bearer BQDniitz5xKN954vdJvK3KytAyQ-oSFenmBn0tTbIfkvkL5O-hfLxjXaItMHI_S2lSsiyfGzb2w2yWA1u_Gqc1AJuo0hNheDolBjFtr2MdtGRxg_0Tr_zIc_vCWwT9cKMoX_DUygMI7GVkmc7U0pQlcWUsInXZ5H2uBmPoHSKQsQm0CxeVo',
 };
 
 const fetchBrowseCategories = () => {
@@ -82,11 +83,11 @@ export const fetchPlaylists = (playlistName: string) => {
     }
   };
 };
-export const fetchUsersPlaylists = () => {
+export const fetchUsersPlaylists = (userId: string) => {
   return async (dispatch: Dispatch<Actions>) => {
     try {
       const {data} = await axios.get(
-        'https://api.spotify.com/v1/me/playlists',
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
         {
           headers,
         },
@@ -112,6 +113,12 @@ export const fetchPlaylistTracks = (playlistId: string) => {
           headers,
         },
       );
+      const res = await axios.get(
+        `https://api.spotify.com/v1/playlists/${playlistId}`,
+        {
+          headers,
+        },
+      );
       const tracks = data.items.map((item: any) => item.track.album);
 
       const images = await axios.get(
@@ -123,7 +130,7 @@ export const fetchPlaylistTracks = (playlistId: string) => {
 
       dispatch({
         type: ActionTypes.GET_PLAYLIST_TRACKS,
-        payload: {tracks, coverImage: images.data},
+        payload: {tracks, coverImage: images.data, playlist: res.data},
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -140,12 +147,17 @@ export const createPlaylist = (
 ) => {
   return async (dispatch: Dispatch<Actions>) => {
     try {
-      await axios.post(
+      const res = await axios.post(
         `https://api.spotify.com/v1/users/${userId}/playlists`,
-        {name, description},
+        {name, description, public: false},
         {headers},
       );
-      dispatch({type: ActionTypes.CREATE_PLAYLIST});
+      dispatch({
+        type: ActionTypes.CREATE_PLAYLIST,
+        payload: {createdPlaylist: res.data},
+      });
+      const playlist = res.data as UserPlaylist;
+      return {createdPlaylistId: playlist.id};
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);

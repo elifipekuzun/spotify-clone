@@ -6,23 +6,22 @@ import {useActions} from '../../state/hooks/use-actions';
 import {useTypedSelector} from '../../state/hooks/use-typed-selector';
 import {useNavigation} from '@react-navigation/native';
 import {LibraryStackNavigationProps} from '../../navigation';
+import {USER_ID} from 'react-native-dotenv';
 
 export const UserPlaylists: React.FC = () => {
-  const {userPlaylists} = useTypedSelector(state => state.spotify);
+  const {userLibrary} = useTypedSelector(state => state.library);
   const {fetchUsersPlaylists} = useActions();
   const navigation = useNavigation<LibraryStackNavigationProps>();
 
   useEffect(() => {
-    if (!userPlaylists.length) {
-      fetchUsersPlaylists();
-    }
+    fetchUsersPlaylists(USER_ID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <ScrollView>
       <LibraryHeaderScroll />
-      {userPlaylists &&
-        userPlaylists.map(item => {
+      {userLibrary &&
+        userLibrary.all.map(item => {
           return (
             <UserPlaylistItem
               key={item.id}

@@ -31,6 +31,14 @@ export interface CategoryPlaylistItem {
   id: string;
   images: ImageParams[];
   name: string;
+  follower: {
+    href: string;
+    total: number;
+  };
+  owner: {
+    id: string;
+    href: string;
+  };
 }
 
 export interface UserPlaylist {

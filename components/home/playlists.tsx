@@ -31,7 +31,9 @@ export const Playlists: React.FC<{playlistName: string}> = ({playlistName}) => {
                 item={item}
                 key={item.id}
                 onPress={() => {
-                  navigation.navigate('Tracks', {playlistId: item.id});
+                  navigation.navigate('Tracks', {
+                    playlistId: item.id,
+                  });
                 }}
               />
             );

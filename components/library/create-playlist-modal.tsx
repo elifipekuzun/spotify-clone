@@ -12,14 +12,19 @@ import {
 import {FilledButton} from '../filled-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useActions} from '../../state/hooks/use-actions';
+import {useNavigation} from '@react-navigation/native';
+import {LibraryStackNavigationProps} from '../../navigation';
+import {useTypedSelector} from '../../state/hooks/use-typed-selector';
 
 export const CreatePlaylistModal: React.FC<{
   isVisible: boolean;
   onRequestClose: () => void;
 }> = ({isVisible, onRequestClose}) => {
   const {createPlaylist} = useActions();
+  const {userLibrary} = useTypedSelector(state => state.library);
 
-  const [playlistName, setPlaylistName] = useState('');
+  const [playlistName, setPlaylistName] = useState('My Playlist');
+  const navigation = useNavigation<LibraryStackNavigationProps>();
   return (
     <Modal
       animationType="slide"
@@ -33,6 +38,7 @@ export const CreatePlaylistModal: React.FC<{
           <Text style={styles.title}>Give your playlist a name.</Text>
           <View style={styles.inputContainer}>
             <TextInput
+              focusable
               style={styles.input}
               value={playlistName}
               onChangeText={text => setPlaylistName(text)}
@@ -40,7 +46,14 @@ export const CreatePlaylistModal: React.FC<{
           </View>
           <FilledButton
             title="Create"
-            onPress={() => createPlaylist(USER_ID, playlistName, '')}
+            onPress={() => {
+              createPlaylist(USER_ID, playlistName, '');
+              if (userLibrary.created.id) {
+                navigation.navigate('AddSongToList', {
+                  playlistId: userLibrary.created.id,
+                });
+              }
+            }}
           />
         </View>
       </SafeAreaView>

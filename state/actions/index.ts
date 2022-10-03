@@ -39,6 +39,7 @@ export interface GetUsersPlaylistsAction {
 export interface GetPlaylistTracksAction {
   type: ActionTypes.GET_PLAYLIST_TRACKS;
   payload: {
+    playlist: CategoryPlaylistItem;
     tracks: Track[];
     coverImage: ImageParams[];
   };
@@ -46,6 +47,14 @@ export interface GetPlaylistTracksAction {
 
 export interface CreatePlaylistAction {
   type: ActionTypes.CREATE_PLAYLIST;
+  payload: {
+    createdPlaylist: UserPlaylist;
+  };
+}
+
+export interface DeleteUserPlaylistAction {
+  type: ActionTypes.DELETE_USER_PLAYLIST;
+  payload: {};
 }
 
 export type Actions =
